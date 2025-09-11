@@ -1,31 +1,56 @@
+import json
 from openai import OpenAI
 import os
+import dotenv
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+dotenv.load_dotenv()
+
+# openai.api_key = os.getenv("OPENAI_API_KEY")
+api_key = os.getenv("OPENAI_API_KEY")
 
 client = OpenAI(
-    api_key=openai.api_key,
+    api_key=api_key,
     base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
 )
 
+
 def process_lead(lead):
-    # Call LLM to enrich lead
     prompt = f"""
+    You are an assistant that enriches sales leads.
+
     Lead info: {lead}
-    1. Score this lead (1-10).
-    2. Suggest buyer persona.
-    3. Fill missing details if obvious.
-    4. Draft a short outreach email.
+
+    Return ONLY valid JSON. 
+    Do not include explanations, markdown, or code fences. Just raw JSON.
+
+    Format:
+    {{
+    "priority_score": <integer between 1-10>,
+    "persona": "<string>",
+    "outreach_email": "<string, short personalized email>",
+    "status": "Contacted"
+    }}
     """
+
     response = client.chat.completions.create(
-        model="gemini-2.5-flash", messages=[{"role": "user", "content": prompt}]
+        model="gemini-2.5-flash",
+        messages=[{"role": "user", "content": prompt}],
+        temperature=0,
     )
 
-    result = response.choices[0].message["content"]
+    result = response.choices[0].message.content.strip()
+    print("RAW RESULT:", result)
 
-    lead["priority_score"] = 8  # parse from result
-    lead["persona"] = "Decision Maker"
-    lead["outreach_email"] = "Hi John, I noticed your work at ACME..."
-    lead["status"] = "Contacted"
+    try:
+        parsed = json.loads(result)
+    except json.JSONDecodeError:
+        print("Failed to parse JSON, falling back to defaults.")
+        parsed = {
+            "priority_score": 5,
+            "persona": "Unknown",
+            "outreach_email": "Hi there, would love to connect.",
+            "status": "Contacted",
+        }
 
+    lead.update(parsed)
     return lead
