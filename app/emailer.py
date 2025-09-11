@@ -36,8 +36,8 @@ def send_email(lead):
         print(f"Successfully sent email to {lead['email']}")
         return True
 
-    except smtplib.SMTPAuthenticationError:
-        print(f"Authentication failed for {lead['email']}. Check SMTP credentials.")
+    except smtplib.SMTPAuthenticationError as e:
+        print("Auth error:", e.smtp_code, e.smtp_error.decode())
         return False
     except smtplib.SMTPConnectError:
         print(f"Failed to connect to SMTP server for {lead['email']}")

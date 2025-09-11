@@ -1,21 +1,3 @@
 name,email,company,role,priority_score,persona,outreach_email,status,email_sent
-John,fegomi2136@knilok.com,Acme,CTO,9,Technology Leader,"Hi John,
-
-As CTO at Acme, you're likely focused on strategic technology initiatives and driving innovation. Our solution helps leaders like you optimize tech operations and accelerate product development.
-
-Would you be open to a brief discussion next week to see how we could support your goals at Acme?
-
-Best,
-[Your Name]",Contacted,False
-Jack,rayoka4974@certve.com,Startup,Intern,2,Startup Intern,"Subject: Quick question for Jack at Startup
-
-Hi Jack,
-
-Hope you're having a great experience as an Intern at Startup!
-
-We often help growing companies like yours with [brief value proposition, e.g., streamlining project management].
-
-I'm curious, what's one area you think Startup could improve to make things even smoother for the team?
-
-Best,
-[Your Name/Company]",,False
+John,fegomi2136@knilok.com,Acme,CTO,9,Technical Decision Maker,"Hi John, as CTO at Acme, you're likely focused on driving technological innovation and efficiency. Our solution helps leaders like you optimize their tech stack for enhanced performance and cost savings. Would you be open to a brief chat?",Contacted,False
+Jack,rayoka4974@certve.com,Startup,Intern,2,Junior Contributor,"Hi Jack, Hope you're enjoying your internship at Startup! We often share insights relevant to junior team members in dynamic environments. Would you be interested in some resources that could support your learning and projects? Best, [Your Name]",Contacted,False
